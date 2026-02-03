@@ -4,6 +4,8 @@ class_name Card
 signal hovered(card: Card)
 signal hovered_off(card: Card)
 
+var hand_position: Vector2
+
 func _ready() -> void:
 	get_parent().connect_card_signals(self)
 

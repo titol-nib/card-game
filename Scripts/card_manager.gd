@@ -7,12 +7,10 @@ var COLLISION_MASKS: Dictionary[String, int] = {
 
 var card_being_dragged: Node2D
 var screen_size: Vector2
-var hand: Array[Card]
 var is_hovering_on_card: bool
 
 @onready var camera: Camera2D = $"../Camera2D"
-
-
+@onready var player_hand: PlayerHand = $"../PlayerHand"
 func _ready() -> void:
 
 	if camera:
@@ -45,6 +43,9 @@ func finish_drag():
 		card_being_dragged.position = card_slot_found.position
 		card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true
 		card_slot_found.card_in_slot = true
+		player_hand.remove_card_from_hand(card_being_dragged)
+	else:
+		player_hand.add_card_to_hand(card_being_dragged)
 	card_being_dragged = null
 
 
