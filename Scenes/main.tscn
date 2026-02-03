@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://x8ivd38oxb17"]
+
+[ext_resource type="Script" uid="uid://bbtnuwunmeap3" path="res://Scripts/card_manager.gd" id="1_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://bificouecmuld" path="res://Scenes/Cards/card.tscn" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://tp3h73c5fnb5" path="res://Scenes/Cards/card_slot.tscn" id="3_8gbba"]
+
+[node name="Main" type="Node2D" unique_id=400236910]
+
+[node name="CardManager" type="Node2D" parent="." unique_id=2000433239]
+script = ExtResource("1_bo1nx")
+
+[node name="Card" parent="CardManager" unique_id=944102361 instance=ExtResource("2_8gbba")]
+position = Vector2(-135, 442)
+
+[node name="Card2" parent="CardManager" unique_id=1845501562 instance=ExtResource("2_8gbba")]
+position = Vector2(126, 444)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1508707555]
+zoom = Vector2(0.5, 0.5)
+
+[node name="CardSlot" parent="." unique_id=1826442648 instance=ExtResource("3_8gbba")]
+position = Vector2(-138, 77)
+
+[node name="CardSlot2" parent="." unique_id=1879768787 instance=ExtResource("3_8gbba")]
+position = Vector2(195, 113)
+
+[node name="CardSlot3" parent="." unique_id=1291219637 instance=ExtResource("3_8gbba")]
+position = Vector2(-395, 120)
+
+[node name="PlayerHand" type="Node2D" parent="." unique_id=399524509]

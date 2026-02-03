@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bificouecmuld"]
+
+[ext_resource type="Texture2D" uid="uid://dwq0d74jn2iox" path="res://playing-cards-assets/svg-cards/jack_of_spades.svg" id="1_s2ncq"]
+[ext_resource type="Script" uid="uid://xu73ugjghljp" path="res://Scripts/Cards/card.gd" id="1_ws51j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ws51j"]
+size = Vector2(221, 321)
+
+[node name="Card" type="Node2D" unique_id=944102361]
+script = ExtResource("1_ws51j")
+
+[node name="CardSprite" type="Sprite2D" parent="." unique_id=2055814883]
+texture = ExtResource("1_s2ncq")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=651998429]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1657089958]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_ws51j")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
