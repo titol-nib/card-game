@@ -2,7 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bbtnuwunmeap3" path="res://Scripts/card_manager.gd" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://tp3h73c5fnb5" path="res://Scenes/Cards/card_slot.tscn" id="3_8gbba"]
+[ext_resource type="Script" uid="uid://dqi3re2r0gdu2" path="res://Scripts/deck.gd" id="4_21xkr"]
 [ext_resource type="Script" uid="uid://gd41tkwijykf" path="res://Scripts/Cards/player_hand.gd" id="4_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://bii4ch1urr8mc" path="res://playing-cards-assets/png/back.png" id="4_kry3j"]
+[ext_resource type="Script" uid="uid://cbvboy2gm17pr" path="res://Scripts/input_manager.gd" id="6_6bp64"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21xkr"]
+size = Vector2(156, 237)
 
 [node name="Main" type="Node2D" unique_id=400236910]
 
@@ -11,11 +17,38 @@ script = ExtResource("1_bo1nx")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1508707555]
 position = Vector2(935, 511)
-zoom = Vector2(0.84, 0.84)
+zoom = Vector2(0.505, 0.505)
 
 [node name="CardSlot3" parent="." unique_id=1291219637 instance=ExtResource("3_8gbba")]
-position = Vector2(952, 538)
+position = Vector2(952, 272)
 
 [node name="PlayerHand" type="Node2D" parent="." unique_id=399524509]
 script = ExtResource("4_jjvhh")
-HAND_COUNT = 8
+
+[node name="Deck" type="Node2D" parent="." unique_id=862204051]
+z_index = -2
+position = Vector2(-90, 890)
+scale = Vector2(1.4068581, 1.4068581)
+script = ExtResource("4_21xkr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Deck" unique_id=1581228409]
+texture = ExtResource("4_kry3j")
+
+[node name="Area2D" type="Area2D" parent="Deck" unique_id=1368385598]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deck/Area2D" unique_id=1857841700]
+position = Vector2(-1, 0.5)
+shape = SubResource("RectangleShape2D_21xkr")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Deck" unique_id=46503132]
+offset_left = 36.25099
+offset_top = -116.57181
+offset_right = 76.25099
+offset_bottom = -76.57181
+theme_override_colors/default_color = Color(1, 0, 1, 1)
+text = "100"
+
+[node name="InputManager" type="Node2D" parent="." unique_id=653106679]
+script = ExtResource("6_6bp64")

@@ -1,8 +1,10 @@
 extends Node2D
+class_name CardManager
 
 var COLLISION_MASKS: Dictionary[String, int] = {
 	"Card" : 1,
-	"CardSlot" : 2
+	"CardSlot" : 2,
+	"Deck" : 4
 }
 
 var card_being_dragged: Node2D
@@ -11,6 +13,8 @@ var is_hovering_on_card: bool
 
 @onready var camera: Camera2D = $"../Camera2D"
 @onready var player_hand: PlayerHand = $"../PlayerHand"
+@onready var input_manager: InputManager = $"../InputManager"
+
 func _ready() -> void:
 
 	if camera:
@@ -19,17 +23,8 @@ func _ready() -> void:
 	else:
 		screen_size = get_viewport_rect().size
 		print("no camera")
-		
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.is_action_pressed("card_click"):
-			var card = raycast_check_for_card("Card")
-			if card:
-				start_drag(card)
-		elif event is InputEventMouseButton and event.is_action_released("card_click"):
-			if card_being_dragged:
-				finish_drag()
+	
+	input_manager.left_mouse_button_released.connect(_on_left_mouse_button_released)
 
 func start_drag(card):
 	card_being_dragged = card
@@ -45,7 +40,7 @@ func finish_drag():
 		card_slot_found.card_in_slot = true
 		player_hand.remove_card_from_hand(card_being_dragged)
 	else:
-		player_hand.add_card_to_hand(card_being_dragged)
+		player_hand.add_card_to_hand(card_being_dragged, PlayerHand.DEFAULT_CARD_MOVE_SPEED)
 	card_being_dragged = null
 
 
@@ -64,14 +59,18 @@ func raycast_check_for_card(card_type: String):
 				return result[0].collider.get_parent()
 	return null
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if card_being_dragged:
 		var mouse_pos: Vector2 = get_global_mouse_position()
 		card_being_dragged.position = Vector2(
 			clamp(mouse_pos.x, -screen_size.x, screen_size.x),
 			clamp(mouse_pos.y, -screen_size.y, screen_size.y)
 		)
-		
+
+func _on_left_mouse_button_released():
+	if card_being_dragged:
+		finish_drag()
+
 func connect_card_signals(card: Card):
 	card.hovered.connect(card_hovered)
 	card.hovered_off.connect(card_hovered_off)
